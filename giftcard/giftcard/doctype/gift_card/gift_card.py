@@ -18,7 +18,7 @@ class GiftCard(Document):
 			frappe.throw("Amount Should be Positive number")
 		if not self.balance:
 			self.balance = self.amount
-		# print('done')
+
 	def update_balance(self,x):
 		if x <= 0 : 
 			frappe.throw("Not allowed nigative number")
