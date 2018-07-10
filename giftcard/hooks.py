@@ -87,6 +87,24 @@ app_license = "MIT"
 #	}
 # }
 
+# doc_events = {
+# 	"*": {
+# 		"on_update": "method",
+# 		"on_cancel": "method",
+# 		"on_trash": "method"
+#	}
+# }
+
+doc_events = {
+	"Payment Entry": {
+		"on_submit": "giftcard.gift_api.consum_gift_card",
+		"on_cancel": "giftcard.gift_api.consum_gift_card"
+		# "on_cancel": "method",
+		# "on_trash": "method"
+	}
+}
+
+
 # Scheduled Tasks
 # ---------------
 

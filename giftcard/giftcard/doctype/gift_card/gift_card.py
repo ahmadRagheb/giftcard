@@ -20,14 +20,21 @@ class GiftCard(Document):
 			self.balance = self.amount
 
 	def update_balance(self,x):
-		if x <= 0 : 
-			frappe.throw("Not allowed nigative number")
-
-		elif self.balance < x :
-			frappe.throw("Value used Bigger than GiftCard balance")
+		if self.balance < x :
+			frappe.throw("Paid Amount exceeded GiftCard balance")
 
 		else:
 			self.balance = flt(self.balance) - flt(x) 
+
+	def add_balance(self,x):
+		self.balance = flt(self.balance) + flt(x) 
+
+	
+	def check_used(self):
+		if self.balance == self.amount:
+			return False
+		else:
+			return True 
 
 	def create_card_number(self):			
 		data = list(string.ascii_lowercase)
@@ -35,3 +42,4 @@ class GiftCard(Document):
 		random_list = [str(data[randint(0, len(data)-1)]) for n in range(0, 21)]
 		random_string = ''.join(random_list)
 		self.card_number = random_string
+
