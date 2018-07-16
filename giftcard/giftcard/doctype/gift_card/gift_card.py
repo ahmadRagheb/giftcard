@@ -12,8 +12,9 @@ from frappe.utils.data import flt
 class GiftCard(Document):
 	
 	def validate(self):
-		if not self.card_number:
-			self.create_card_number()
+		# if not self.card_number:
+			# self.create_card_number()
+			# frappe.throw('please enter card_number')
 		if flt(self.amount) <=0:
 			frappe.throw("Amount Should be Positive number")
 		if not self.balance:
@@ -36,10 +37,11 @@ class GiftCard(Document):
 		else:
 			return True 
 
-	def create_card_number(self):			
+	# ignored for using js lib
+	def create_card_number(self):
 		data = list(string.ascii_lowercase)
 		[data.append(n) for n in range(0, 10)]
-		random_list = [str(data[randint(0, len(data)-1)]) for n in range(0, 21)]
+		random_list = [str(data[randint(0, len(data)-1)]) for n in range(0, 7)]
 		random_string = ''.join(random_list)
 		self.card_number = random_string
 
