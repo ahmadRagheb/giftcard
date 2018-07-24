@@ -8,6 +8,9 @@ from frappe.model.document import Document
 import string
 from random import randint
 from frappe.utils.data import flt
+from frappe.utils.data import today
+import time
+import datetime
 
 class GiftCard(Document):
 	
@@ -18,7 +21,7 @@ class GiftCard(Document):
  			frappe.throw("Amount Should be Positive number")
  		if not self.balance:
  			self.balance = self.amount
-
+ 		self.is_expired_on_validate()
 
 	def update_balance(self,x):
 		if self.balance < x :
@@ -46,3 +49,28 @@ class GiftCard(Document):
 		random_string = ''.join(random_list)
 		self.card_number = random_string
 
+	def is_expired(self):
+		if self.expiry_date :
+			expiry_date = self.expiry_date
+			today_v = today()
+			newdate1 = datetime.datetime.strptime(expiry_date, "%Y-%m-%d") 
+			now_date = datetime.datetime.strptime(today_v, "%Y-%m-%d") 
+			if newdate1 < now_date:
+				return True
+			else:
+				return False
+		else:
+			frappe.throw("Please insert expiry date")
+
+	def is_expired_on_validate(self):
+		if self.expiry_date :
+			expiry_date = self.expiry_date
+			today_v = today()
+			newdate1 = datetime.datetime.strptime(expiry_date, "%Y-%m-%d") 
+			now_date = datetime.datetime.strptime(today_v, "%Y-%m-%d") 
+			if newdate1 < now_date:
+				frappe.throw("Please insert expiry date more than current date ")
+			else:
+				return False
+		else:
+			frappe.throw("Please insert expiry date")

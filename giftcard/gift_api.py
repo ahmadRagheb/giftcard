@@ -8,7 +8,7 @@ import frappe.client
 from frappe.utils.response import build_response
 from frappe import _
 from six.moves.urllib.parse import urlparse, urlencode
-
+from frappe.utils.data import today
 
 def consum_gift_card(doc,method):
 	type_payment= "بطاقة هدايا"
@@ -31,8 +31,13 @@ def consum_gift_card(doc,method):
 						frappe.throw("One time use card can't be used twice")
 					else:
 						gift_doc.update_balance(doc.paid_amount)
+				elif gift_doc.is_expired():
+					frappe.throw("Expired Card")
+
 				else:
 					gift_doc.update_balance(doc.paid_amount)
+
+
 
 			gift_doc.save()
 			frappe.db.commit()
