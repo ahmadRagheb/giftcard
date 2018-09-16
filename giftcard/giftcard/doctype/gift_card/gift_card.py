@@ -53,7 +53,7 @@ class GiftCard(Document):
 		if self.expiry_date :
 			expiry_date = self.expiry_date
 			today_v = today()
-			newdate1 = datetime.datetime.strptime(expiry_date, "%Y-%m-%d") 
+			newdate1 = datetime.datetime.strptime(str(expiry_date), "%Y-%m-%d") 
 			now_date = datetime.datetime.strptime(today_v, "%Y-%m-%d") 
 			if newdate1 < now_date:
 				return True
@@ -66,7 +66,7 @@ class GiftCard(Document):
 		if self.expiry_date :
 			expiry_date = self.expiry_date
 			today_v = today()
-			newdate1 = datetime.datetime.strptime(expiry_date, "%Y-%m-%d") 
+			newdate1 = datetime.datetime.strptime(str(expiry_date), "%Y-%m-%d") 
 			now_date = datetime.datetime.strptime(today_v, "%Y-%m-%d") 
 			if newdate1 < now_date:
 				frappe.throw("Please insert expiry date more than current date ")
